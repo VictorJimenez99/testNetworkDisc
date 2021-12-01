@@ -28,8 +28,8 @@ class RouterDiscovery:
             print("auth_error")
         except NetmikoTimeoutException:
             print("Timeout Error")
-        except Exception:
-            print("Some other error")
+        except Exception as e:
+            print(f"Some other error: {e}")
 
 
 
