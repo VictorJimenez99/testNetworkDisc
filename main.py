@@ -36,4 +36,4 @@ class RouterDiscovery:
 if __name__ == "__main__":
     print("hola")
     router = RouterDiscovery(ip="10.1.0.254", username="admin", password="admin")
-    print(router)
+    print(router.show_neighbors())
