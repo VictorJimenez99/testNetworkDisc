@@ -1,17 +1,14 @@
 from netmiko import ConnectHandler, NetmikoTimeoutException, NetmikoAuthenticationException
-from collections import namedtuple
-
-
 
 
 class RouterDiscovery:
-    def __init__(self, ip: str,username: str, password: str):
+    def __init__(self, ip: str, username: str, password: str, destination_host: str):
+        self.destination_host = destination_host
         self.ip: str = ip
         self.username = username
         self.device_type: str = "cisco_ios_telnet"
         self.connected_to: [] = []
         self.password: str = password
-
 
     def show_neighbors(self):
         device = {
@@ -31,6 +28,33 @@ class RouterDiscovery:
         except Exception as e:
             print(f"Some other error: {e}")
 
+    def __eq__(self, other):
+        return self.destination_host == other.destination_host
+
+
+def discover_topology(gateway_router: RouterDiscovery):
+    user_name_unique = gateway_router.username
+    password_unique = gateway_router.password
+    discovered_routers: [] = [gateway_router]
+    index = 0
+    finished: bool = False
+
+    while not finished:
+        try: single_router = discovered_routers[index]
+        except IndexError:
+            print("finished")
+            finished = True
+            continue
+
+        neighbors_data = single_router.show_neighbors()
+        for unique_data in neighbors_data:
+            single_router = RouterDiscovery(unique_data.ip,
+                                            user_name_unique,
+                                            password_unique,
+                                            unique_data.destination_host)
+            if single_router not in discovered_routers:
+                discovered_routers.append(single_router)
+        index += 1
 
 
 if __name__ == "__main__":
