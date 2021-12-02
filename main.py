@@ -34,6 +34,9 @@ class RouterDiscovery:
     def __eq__(self, other):
         return self.destination_host == other.destination_host
 
+    def __str__(self):
+        return self.destination_host
+
 
 def discover_topology(gateway_router: RouterDiscovery):
     user_name_unique = gateway_router.username
@@ -43,7 +46,8 @@ def discover_topology(gateway_router: RouterDiscovery):
     finished: bool = False
 
     while not finished:
-        try: single_router = discovered_routers[index]
+        try:
+            single_router = discovered_routers[index]
         except IndexError:
             print("finished")
             finished = True
@@ -52,7 +56,6 @@ def discover_topology(gateway_router: RouterDiscovery):
         neighbors_data = single_router.show_neighbors()
 
         for unique_data in neighbors_data:
-            print(f"data for new router: {unique_data}")
             single_router = RouterDiscovery(unique_data.get("management_ip"),
                                             user_name_unique,
                                             password_unique,
