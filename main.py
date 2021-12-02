@@ -51,7 +51,7 @@ def discover_topology(gateway_router: RouterDiscovery):
 
         neighbors_data = single_router.show_neighbors()
         for unique_data in neighbors_data:
-            single_router = RouterDiscovery(unique_data.ip,
+            single_router = RouterDiscovery(unique_data.management_ip,
                                             user_name_unique,
                                             password_unique,
                                             unique_data.destination_host)
