@@ -73,6 +73,6 @@ def discover_topology(gateway_router: RouterDiscovery):
 
 if __name__ == "__main__":
     print("hola")
-    router = RouterDiscovery(ip="10.1.0.254", username="admin", password="admin", destination_host="R1.Red1.com")
+    router = RouterDiscovery(ip="10.1.0.254", username="admin", password="admin", destination_host="R1.red1.com")
     print(router.show_neighbors())
     print(discover_topology(router))
