@@ -28,6 +28,9 @@ class RouterDiscovery:
         except Exception as e:
             print(f"Some other error: {e}")
 
+    def add_connection(self, router):
+        self.connected_to.append(router)
+
     def __eq__(self, other):
         return self.destination_host == other.destination_host
 
@@ -52,12 +55,16 @@ def discover_topology(gateway_router: RouterDiscovery):
                                             user_name_unique,
                                             password_unique,
                                             unique_data.destination_host)
+            single_router.add_connection(single_router)
             if single_router not in discovered_routers:
                 discovered_routers.append(single_router)
         index += 1
+
+    return discovered_routers
 
 
 if __name__ == "__main__":
     print("hola")
     router = RouterDiscovery(ip="10.1.0.254", username="admin", password="admin", destination_host="R1.Red1.com")
     print(router.show_neighbors())
+    print(discover_topology(router))
