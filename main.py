@@ -37,6 +37,9 @@ class RouterDiscovery:
     def __str__(self):
         return self.destination_host
 
+    def __repr__(self):
+        return self.destination_host
+
 
 def discover_topology(gateway_router: RouterDiscovery):
     user_name_unique = gateway_router.username
