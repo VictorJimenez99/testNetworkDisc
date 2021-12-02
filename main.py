@@ -50,11 +50,13 @@ def discover_topology(gateway_router: RouterDiscovery):
             continue
 
         neighbors_data = single_router.show_neighbors()
+
         for unique_data in neighbors_data:
-            single_router = RouterDiscovery(unique_data.management_ip,
+            print(f"data for new router: {unique_data}")
+            single_router = RouterDiscovery(unique_data.get("management_ip"),
                                             user_name_unique,
                                             password_unique,
-                                            unique_data.destination_host)
+                                            unique_data.get("destination_host"))
             single_router.add_connection(single_router)
             if single_router not in discovered_routers:
                 discovered_routers.append(single_router)
