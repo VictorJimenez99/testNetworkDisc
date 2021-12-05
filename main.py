@@ -76,4 +76,4 @@ if __name__ == "__main__":
         password="admin", destination_host="R1.red1.com")
     discovered_topology = discover_topology(router_test)
     for r in discovered_topology:
-        print(f"{r.destination_host} is connected to: \n{r.connected_to}")
+        print(f"{r.show_neighbors()}")
