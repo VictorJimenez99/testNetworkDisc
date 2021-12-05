@@ -35,7 +35,7 @@ class RouterDiscovery:
         return self.destination_host == other.destination_host
 
     def __repr__(self):
-        return self.destination_host
+        return f"RD: {self.destination_host}"
 
 
 def discover_topology(gateway_router: RouterDiscovery):
@@ -65,6 +65,7 @@ def discover_topology(gateway_router: RouterDiscovery):
                 discovered_routers.append(single_router.destination_host)
         index += 1
 
+    print(discovered_routers)
     return discovered_routers
 
 
