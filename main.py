@@ -29,7 +29,7 @@ class RouterDiscovery:
             print(f"Some other error: {e}")
 
     def add_connection(self, router):
-        self.connected_to.append(router)
+        self.connected_to.append(router.destination_host)
 
     def __eq__(self, other):
         return self.destination_host == other.destination_host
@@ -65,7 +65,7 @@ def discover_topology(gateway_router: RouterDiscovery):
                 discovered_routers.append(single_router)
         index += 1
 
-    print(discovered_routers)
+    # print(discovered_routers)
     return discovered_routers
 
 
@@ -77,4 +77,3 @@ if __name__ == "__main__":
     discovered_topology = discover_topology(router_test)
     for r in discovered_topology:
         print(f"{r.destination_host} is connected to: \n{r.connected_to}")
-
