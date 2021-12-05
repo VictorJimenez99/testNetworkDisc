@@ -34,9 +34,6 @@ class RouterDiscovery:
     def __eq__(self, other):
         return self.destination_host == other.destination_host
 
-    def __str__(self):
-        return self.destination_host
-
     def __repr__(self):
         return self.destination_host
 
@@ -65,7 +62,7 @@ def discover_topology(gateway_router: RouterDiscovery):
                                             unique_data.get("destination_host"))
             single_router.add_connection(single_router)
             if single_router not in discovered_routers:
-                discovered_routers.append(single_router)
+                discovered_routers.append(single_router.destination_host)
         index += 1
 
     return discovered_routers
@@ -76,5 +73,7 @@ if __name__ == "__main__":
     router_test = RouterDiscovery(
         ip="10.1.0.254", username="admin",
         password="admin", destination_host="R1.red1.com")
-    print(router_test.show_neighbors())
-    print(discover_topology(router_test))
+    discovered_topology = discover_topology(router_test)
+    for r in discovered_topology:
+        print(f"{r.destination_host} is connected to: \n{r.connected_to}")
+
