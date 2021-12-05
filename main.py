@@ -21,7 +21,7 @@ class RouterDiscovery:
             with ConnectHandler(**device) as connector:
                 value = connector.send_command('show cdp neighbors detail', use_textfsm=True)
                 for rout in value:
-                    self.add_connection(rout.destination_host)
+                    self.add_connection(rout.get("destination_host"))
                 return value
         except NetmikoAuthenticationException:
             print("auth_error")
