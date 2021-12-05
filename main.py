@@ -62,7 +62,7 @@ def discover_topology(gateway_router: RouterDiscovery):
                                             unique_data.get("destination_host"))
             single_router.add_connection(single_router)
             if single_router not in discovered_routers:
-                discovered_routers.append(single_router.destination_host)
+                discovered_routers.append(single_router)
         index += 1
 
     print(discovered_routers)
