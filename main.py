@@ -20,6 +20,8 @@ class RouterDiscovery:
         try:
             with ConnectHandler(**device) as connector:
                 value = connector.send_command('show cdp neighbors detail', use_textfsm=True)
+                for rout in value:
+                    self.add_connection(rout.destination_host)
                 return value
         except NetmikoAuthenticationException:
             print("auth_error")
@@ -61,8 +63,7 @@ def discover_topology(gateway_router: RouterDiscovery):
                                             user_name_unique,
                                             password_unique,
                                             unique_data_dest_host)
-            print(f"adding {unique_data_dest_host} to connected devices of  {single_router.destination_host}")
-            single_router.add_connection(unique_data_dest_host)
+            # single_router.add_connection(unique_data_dest_host)
             if single_router not in discovered_routers:
                 discovered_routers.append(single_router)
         index += 1
