@@ -79,4 +79,7 @@ if __name__ == "__main__":
         password="admin", destination_host="R1.red1.com")
     discovered_topology = discover_topology(router_test)
     for r in discovered_topology:
-        print(f"{r.destination_host} is connected to: {r.connected_to}")
+        data: [] = []
+        for info in r.connected_to:
+            data.append(info.get("destination_host"))
+        print(f"{r.destination_host} is connected to: {data}")
