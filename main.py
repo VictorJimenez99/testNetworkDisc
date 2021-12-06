@@ -7,7 +7,7 @@ class RouterDiscovery:
         self.ip: str = ip
         self.username = username
         self.device_type: str = "cisco_ios_telnet"
-        self.connected_to: [] = []
+        self.connected_to: [] = []  # router info dictionary
         self.password: str = password
 
     def show_neighbors(self):
@@ -21,7 +21,7 @@ class RouterDiscovery:
             with ConnectHandler(**device) as connector:
                 value = connector.send_command('show cdp neighbors detail', use_textfsm=True)
                 for rout in value:
-                    self.add_connection(rout.get("destination_host"))
+                    self.add_connection(rout)
                 return value
         except NetmikoAuthenticationException:
             print("auth_error")
@@ -30,8 +30,8 @@ class RouterDiscovery:
         except Exception as e:
             print(f"Some other error: {e}")
 
-    def add_connection(self, router_name):
-        self.connected_to.append(router_name)
+    def add_connection(self, router_info):
+        self.connected_to.append(router_info)
 
     def __eq__(self, other):
         return self.destination_host == other.destination_host
