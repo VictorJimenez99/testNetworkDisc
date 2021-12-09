@@ -52,6 +52,7 @@ class RouterDiscovery:
                 self.protocol = router_protocol
                 neighbors = connector.send_command('show cdp neighbors detail', use_textfsm=True)
                 for rout in neighbors:
+                    print(rout)
                     self.add_connection(rout)
                 return neighbors
         except NetmikoAuthenticationException:
