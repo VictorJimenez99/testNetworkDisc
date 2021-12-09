@@ -1,6 +1,6 @@
 from netmiko import ConnectHandler, NetmikoTimeoutException, NetmikoAuthenticationException
 import sys
-
+import requests
 
 class RouterDiscovery:
     def __init__(self, ip: str, username: str, password: str, destination_host: str):
@@ -108,8 +108,15 @@ def discover_topology(gateway_router: RouterDiscovery):
 
 
 if __name__ == "__main__":
+
+    server_url = "http://localhost:5000/"
+
+
     while True:
         print("loop_start")
+        test_request = requests.post(f"{server_url}create_session", data={"name": "root", "password": "root"})
+        print(f"request: {test_request}")
+
         router_test = RouterDiscovery(
             ip="10.1.0.254", username="admin",
             password="admin", destination_host="R1.red1.com")
