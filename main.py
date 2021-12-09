@@ -115,10 +115,11 @@ if __name__ == "__main__":
 
     while True:
         print("loop_start")
+        sess = requests.Session()
         credentials_json = {"name": "root", "password": "root"}
         # payload_req = {'json_payload': credentials_json}
-        login_request = requests.post(f"{server_url}create_session",
-                                      json=credentials_json)
+        login_request = sess.post(f"{server_url}create_session",
+                                  json=credentials_json)
         print(f"request: {login_request}")
 
         router_test = RouterDiscovery(
@@ -139,8 +140,8 @@ if __name__ == "__main__":
                    "connections": connections}
 
         print(payload)
-        login_request = requests.post(f"{server_url}update_topology",
-                                      json=payload)
+        login_request = sess.post(f"{server_url}update_topology",
+                                  json=payload)
         print(f"request: {login_request}")
 
         sys.stdout.flush()
