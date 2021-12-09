@@ -1,4 +1,5 @@
 from netmiko import ConnectHandler, NetmikoTimeoutException, NetmikoAuthenticationException
+import sys
 
 
 class RouterDiscovery:
@@ -108,6 +109,7 @@ def discover_topology(gateway_router: RouterDiscovery):
 
 if __name__ == "__main__":
     while True:
+        print("loop_start")
         router_test = RouterDiscovery(
             ip="10.1.0.254", username="admin",
             password="admin", destination_host="R1.red1.com")
@@ -125,3 +127,4 @@ if __name__ == "__main__":
                        "connections": connections}
 
             print(payload)
+            sys.stdout.flush()
