@@ -139,4 +139,8 @@ if __name__ == "__main__":
                    "connections": connections}
 
         print(payload)
+        login_request = requests.post(f"{server_url}update_topology",
+                                      json=payload)
+        print(f"request: {login_request}")
+
         sys.stdout.flush()
