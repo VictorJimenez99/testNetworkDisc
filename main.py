@@ -86,6 +86,8 @@ def discover_topology(gateway_router: RouterDiscovery):
             continue
 
         neighbors_data = single_router.show_neighbors()
+        if neighbors_data is None:
+            continue
 
         for unique_data in neighbors_data:
             unique_data_dest_host = unique_data.get("destination_host")
