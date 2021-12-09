@@ -27,8 +27,9 @@ class RouterDiscovery:
             with ConnectHandler(**device) as connector:
                 protocol = connector.send_command('show ip route', use_textfsm=True)
                 router_protocol = ""
-                # Since it is assumed that there will only be one protocol at a given moment
-                # one is more than enough to identify the current config of the router
+                # Since it is assumed that there will only be one and only one
+                # protocol at a given moment one match is more than enough to
+                # identify the current config of the router
                 for connection in protocol:
                     possible_protocol_id = connection.get("protocol")
                     if possible_protocol_id == ospf_id:
@@ -43,7 +44,8 @@ class RouterDiscovery:
                     else:
                         router_protocol = "UNKNOWN"
 
-                print(f"protocol: {router_protocol}")
+                # print(f"protocol: {router_protocol}")
+                self.protocol = router_protocol
                 neighbors = connector.send_command('show cdp neighbors detail', use_textfsm=True)
                 for rout in neighbors:
                     self.add_connection(rout)
@@ -107,4 +109,4 @@ if __name__ == "__main__":
             data: [] = []
             for info in r.connected_to:
                 data.append(info.get("destination_host"))
-            print(f"{r.destination_host} is connected to: {data}")
+            print(f"{r.destination_host} with protocol: {r.protocol} is connected to: {data}")
