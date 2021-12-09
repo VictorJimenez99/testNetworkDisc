@@ -1,7 +1,6 @@
 from netmiko import ConnectHandler, NetmikoTimeoutException, NetmikoAuthenticationException
 import sys
 import requests
-import json
 
 
 class RouterDiscovery:
@@ -142,6 +141,6 @@ if __name__ == "__main__":
         print(payload)
         login_request = sess.post(f"{server_url}update_topology",
                                   json=payload)
-        print(f"request: {login_request}")
+        print(f"request: {login_request}: body: {login_request.text}")
 
         sys.stdout.flush()
