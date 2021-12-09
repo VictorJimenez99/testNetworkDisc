@@ -52,7 +52,7 @@ class RouterDiscovery:
                 self.protocol = router_protocol
                 neighbors = connector.send_command('show cdp neighbors detail', use_textfsm=True)
                 for rout in neighbors:
-                    print(rout)
+                    # print(rout)
                     self.add_connection(rout)
                 return neighbors
         except NetmikoAuthenticationException:
@@ -135,7 +135,10 @@ if __name__ == "__main__":
             routers.append({"name": r.destination_host, "ip_addr": r.ip, "protocol": r.protocol})
             appended = []
             for con in r.connected_to:
-                appended.append({"source": r.destination_host, "destination": con.get("destination_host")})
+                appended.append({"source": r.destination_host,
+                                 "source_interface": con.get("local_port"),
+                                 "destination": con.get("destination_host"),
+                                 "destination_interface": con.get("remote_port")})
             connections += appended
 
         payload = {"routers": routers,
