@@ -22,6 +22,7 @@ class RouterDiscovery:
             'username': self.username,
             'password': self.password
         }
+        neighbors = []
         try:
             with ConnectHandler(**device) as connector:
                 protocol = connector.send_command('show ip route', use_textfsm=True)
