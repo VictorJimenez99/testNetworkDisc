@@ -115,10 +115,10 @@ if __name__ == "__main__":
 
     while True:
         print("loop_start")
-        credentials_json = json.dumps({"name": "root", "password": "root"})
-        payload_req = {'json_payload': credentials_json}
+        credentials_json = {"name": "root", "password": "root"}
+        # payload_req = {'json_payload': credentials_json}
         login_request = requests.post(f"{server_url}create_session",
-                                     data=payload_req)
+                                      json=credentials_json)
         print(f"request: {login_request}")
 
         router_test = RouterDiscovery(
