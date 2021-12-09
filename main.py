@@ -1,6 +1,7 @@
 from netmiko import ConnectHandler, NetmikoTimeoutException, NetmikoAuthenticationException
 import sys
 import requests
+import json
 
 
 class RouterDiscovery:
@@ -114,8 +115,11 @@ if __name__ == "__main__":
 
     while True:
         print("loop_start")
-        test_request = requests.post(f"{server_url}create_session", data={"name": "root", "password": "root"})
-        print(f"request: {test_request}")
+        credentials_json = json.dumps({"name": "root", "password": "root"})
+        payload_req = {'json_payload': credentials_json}
+        login_request = requests.post(f"{server_url}create_session",
+                                     data=payload_req)
+        print(f"request: {login_request}")
 
         router_test = RouterDiscovery(
             ip="10.1.0.254", username="admin",
