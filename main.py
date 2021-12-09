@@ -2,6 +2,7 @@ from netmiko import ConnectHandler, NetmikoTimeoutException, NetmikoAuthenticati
 import sys
 import requests
 
+
 class RouterDiscovery:
     def __init__(self, ip: str, username: str, password: str, destination_host: str):
         self.destination_host = destination_host
@@ -110,7 +111,6 @@ def discover_topology(gateway_router: RouterDiscovery):
 if __name__ == "__main__":
 
     server_url = "http://localhost:5000/"
-
 
     while True:
         print("loop_start")
