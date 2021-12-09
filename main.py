@@ -53,6 +53,7 @@ class RouterDiscovery:
             print("auth_error")
         except NetmikoTimeoutException:
             print("Timeout Error")
+            return neighbors
         except Exception as e:
             print(f"Some other error: {e}")
 
