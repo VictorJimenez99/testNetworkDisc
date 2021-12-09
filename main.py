@@ -123,8 +123,9 @@ if __name__ == "__main__":
             for con in r.connected_to:
                 appended.append({"source": r.destination_host, "destination": con.get("destination_host")})
             connections += appended
-            payload = {"routers": routers,
-                       "connections": connections}
 
-            print(payload)
-            sys.stdout.flush()
+        payload = {"routers": routers,
+                   "connections": connections}
+
+        print(payload)
+        sys.stdout.flush()
