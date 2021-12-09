@@ -21,7 +21,8 @@ class RouterDiscovery:
         try:
             with ConnectHandler(**device) as connector:
                 protocol = connector.send_command('show ip route', use_textfsm=True)
-                print(f"protocol list: {protocol}")
+                for connection in protocol:
+                    print(f"protocol: {connection}")
                 neighbors = connector.send_command('show cdp neighbors detail', use_textfsm=True)
                 for rout in neighbors:
                     self.add_connection(rout)
