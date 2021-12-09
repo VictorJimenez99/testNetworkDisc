@@ -20,7 +20,7 @@ class RouterDiscovery:
         }
         try:
             with ConnectHandler(**device) as connector:
-                protocol = connector.send_command('show ip route', use_texfsm=True)
+                protocol = connector.send_command('show ip route') # , use_texfsm=True)
                 print(f"protocol list: {protocol}")
                 neighbors = connector.send_command('show cdp neighbors detail', use_textfsm=True)
                 for rout in neighbors:
