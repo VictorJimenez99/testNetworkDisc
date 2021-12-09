@@ -11,7 +11,6 @@ class RouterDiscovery:
         self.password: str = password
         self.protocol: str = "unknown"
 
-
     def show_neighbors(self):
         ospf_id = "O"
         rip_id = "R"
@@ -64,7 +63,11 @@ class RouterDiscovery:
         return self.destination_host == other.destination_host
 
     def __repr__(self):
-        return f"RD: {self.destination_host}"
+        data_connection: [] = []
+        for dest in r.connected_to:
+            data_connection.append(dest.get("destination_host"))
+        return f"RD: {self.destination_host}, ip:addr: {self.ip}, " \
+               f"protocol: {self.protocol}, connected_to: {data_connection}"
 
 
 def discover_topology(gateway_router: RouterDiscovery):
@@ -106,7 +109,4 @@ if __name__ == "__main__":
             password="admin", destination_host="R1.red1.com")
         discovered_topology = discover_topology(router_test)
         for r in discovered_topology:
-            data: [] = []
-            for info in r.connected_to:
-                data.append(info.get("destination_host"))
-            print(f"{r.destination_host} with protocol: {r.protocol} is connected to: {data}")
+            print(r)
