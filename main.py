@@ -57,11 +57,13 @@ class RouterDiscovery:
                 return neighbors
         except NetmikoAuthenticationException:
             print("auth_error")
+            return neighbors
         except NetmikoTimeoutException:
             print("Timeout Error")
             return neighbors
         except Exception as e:
             print(f"Some other error for router {self.destination_host}: {e}")
+            return neighbors
 
     def add_connection(self, router_info):
         self.connected_to.append(router_info)
