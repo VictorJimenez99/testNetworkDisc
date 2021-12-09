@@ -112,5 +112,16 @@ if __name__ == "__main__":
             ip="10.1.0.254", username="admin",
             password="admin", destination_host="R1.red1.com")
         discovered_topology = discover_topology(router_test)
+        routers = []
+        connections = []
+
         for r in discovered_topology:
-            print(r)
+            routers.append({"name": r.destination_host, "ip_addr": r.ip, "protocol": r.protocol})
+            appended = []
+            for con in r.connected_to:
+                appended.append({"source": r.destination_host, "destination": con.get("destination_host")})
+            connections += appended
+            payload = {"routers": routers,
+                       "connections": connections}
+
+            print(payload)
