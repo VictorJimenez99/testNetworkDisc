@@ -64,7 +64,7 @@ class RouterDiscovery:
 
     def __repr__(self):
         data_connection: [] = []
-        for dest in r.connected_to:
+        for dest in self.connected_to:
             data_connection.append(dest.get("destination_host"))
         return f"RD: {self.destination_host}, ip:addr: {self.ip}, " \
                f"protocol: {self.protocol}, connected_to: {data_connection}"
