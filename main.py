@@ -9,6 +9,7 @@ class RouterDiscovery:
         self.device_type: str = "cisco_ios_telnet"
         self.connected_to: [] = []  # router info dictionary
         self.password: str = password
+        self.protocol: str = "unknown"
 
     def show_neighbors(self):
         device = {
@@ -19,10 +20,12 @@ class RouterDiscovery:
         }
         try:
             with ConnectHandler(**device) as connector:
-                value = connector.send_command('show cdp neighbors detail', use_textfsm=True)
-                for rout in value:
+                protocol = connector.send_command('show ip route', use_texfsm=True)
+                print(f"protocol list: {protocol}")
+                neighbors = connector.send_command('show cdp neighbors detail', use_textfsm=True)
+                for rout in neighbors:
                     self.add_connection(rout)
-                return value
+                return neighbors
         except NetmikoAuthenticationException:
             print("auth_error")
         except NetmikoTimeoutException:
@@ -73,13 +76,13 @@ def discover_topology(gateway_router: RouterDiscovery):
 
 
 if __name__ == "__main__":
-    print("hola")
-    router_test = RouterDiscovery(
-        ip="10.1.0.254", username="admin",
-        password="admin", destination_host="R1.red1.com")
-    discovered_topology = discover_topology(router_test)
-    for r in discovered_topology:
-        data: [] = []
-        for info in r.connected_to:
-            data.append(info.get("destination_host"))
-        print(f"{r.destination_host} is connected to: {data}")
+    while True:
+        router_test = RouterDiscovery(
+            ip="10.1.0.254", username="admin",
+            password="admin", destination_host="R1.red1.com")
+        discovered_topology = discover_topology(router_test)
+        for r in discovered_topology:
+            data: [] = []
+            for info in r.connected_to:
+                data.append(info.get("destination_host"))
+            print(f"{r.destination_host} is connected to: {data}")
