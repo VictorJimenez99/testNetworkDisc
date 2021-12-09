@@ -56,7 +56,7 @@ class RouterDiscovery:
             print("Timeout Error")
             return neighbors
         except Exception as e:
-            print(f"Some other error: {e}")
+            print(f"Some other error for router {self.destination_host}: {e}")
 
     def add_connection(self, router_info):
         self.connected_to.append(router_info)
