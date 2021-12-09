@@ -1,3 +1,5 @@
+import time
+
 from netmiko import ConnectHandler, NetmikoTimeoutException, NetmikoAuthenticationException
 import sys
 import requests
@@ -141,6 +143,11 @@ if __name__ == "__main__":
         print(payload)
         login_request = sess.post(f"{server_url}update_topology",
                                   json=payload)
-        print(f"request: {login_request}: body: {login_request.text}")
+        if login_request.status_code == 200:
+            print(f"request: {login_request}: body: {login_request.text}")
+            json_resp: dict = login_request.json()
+            await_time = json_resp.get("await_time")
+            print(f"Waiting for: {await_time}s before continuing")
+            time.sleep(await_time)
 
         sys.stdout.flush()
