@@ -11,7 +11,12 @@ class RouterDiscovery:
         self.password: str = password
         self.protocol: str = "unknown"
 
+
     def show_neighbors(self):
+        ospf_id = "O"
+        rip_id = "R"
+        eigrp_id = "D"
+
         device = {
             'device_type': self.device_type,
             'ip': self.ip,
@@ -21,8 +26,24 @@ class RouterDiscovery:
         try:
             with ConnectHandler(**device) as connector:
                 protocol = connector.send_command('show ip route', use_textfsm=True)
+                router_protocol = ""
+                # Since it is assumed that there will only be one protocol at a given moment
+                # one is more than enough to identify the current config of the router
                 for connection in protocol:
-                    print(f"protocol: {connection}")
+                    possible_protocol_id = connection.get("protocol")
+                    if possible_protocol_id == ospf_id:
+                        router_protocol = "OSPF"
+                        break
+                    elif possible_protocol_id == rip_id:
+                        router_protocol = "RIP"
+                        break
+                    elif possible_protocol_id == eigrp_id:
+                        router_protocol = "EIGRP"
+                        break
+                    else:
+                        router_protocol = "UNKNOWN"
+
+                print(f"protocol: {router_protocol}")
                 neighbors = connector.send_command('show cdp neighbors detail', use_textfsm=True)
                 for rout in neighbors:
                     self.add_connection(rout)
