@@ -37,13 +37,13 @@ class RouterDiscovery:
                 for connection in protocol:
                     possible_protocol_id = connection.get("protocol")
                     if possible_protocol_id == ospf_id:
-                        router_protocol = "OSPF"
+                        router_protocol = "2"
                         break
                     elif possible_protocol_id == rip_id:
-                        router_protocol = "RIP"
+                        router_protocol = "1"
                         break
                     elif possible_protocol_id == eigrp_id:
-                        router_protocol = "EIGRP"
+                        router_protocol = "3"
                         break
                     else:
                         router_protocol = "UNKNOWN"
